@@ -7,6 +7,8 @@ import blogRouter from "./routes/blogRoutes.js";
 
 const app = express();
 
+await connectDB()
+
 // ✅ CORS setup
 app.use(
   cors({
