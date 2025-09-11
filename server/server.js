@@ -1,38 +1,37 @@
-import express from "express"
-import 'dotenv/config'
-import cors from  'cors'
+import express from "express";
+import "dotenv/config";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import adminRouter from "./routes/adminRoute.js";
 import blogRouter from "./routes/blogRoutes.js";
 
 const app = express();
-  
-await connectDB()
-//Middelwars
+
+// ✅ CORS setup
 app.use(
-  cors()
-//     {
-//     origin: process.env.FRONTEND_URL, // e.g. "https://myblogify.vercel.app"
-//     credentials: true
-//   }
-// )
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://blogify-mern-stack.vercel.app",
+      "https://blogify-mern-stack-m9fuay5ps-rakshit-jains-projects-04f26b9b.vercel.app"  // ✅ add this
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
-app.use(express.json())
 
- //routes
-app.get('/',(req ,res)=>{
-     res.send("api is working")
-})
+app.options("*", cors()); // ✅ Handle preflight requests
 
-app.use('/api/admin',adminRouter)
-app.use('/api/blog',blogRouter)
+// Middleware
+app.use(express.json());
 
+// Routes
+app.get("/", (req, res) => {
+  res.send("API working ✅");
+});
 
-const PORT = process.env.PORT ||3000
-
-app.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`);
-    
-})
+app.use("/api/admin", adminRouter);
+app.use("/api/blog", blogRouter);
 
 export default app;
