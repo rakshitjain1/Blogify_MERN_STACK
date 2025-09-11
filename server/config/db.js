@@ -8,8 +8,7 @@ const connectDB = async () => {
 
     await mongoose.connect(process.env.MONGO_URI, {
       dbName: "blogify",   // always set dbName here
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      
     });
   } catch (error) {
     console.error("❌ MongoDB Error:", error.message);
