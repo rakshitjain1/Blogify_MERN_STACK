@@ -10,10 +10,11 @@ const app = express();
 //Middelwars
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "*", // make sure this matches your frontend URL
+    origin: process.env.FRONTEND_URL || "https://blogify-mern-stack.vercel.app",
     credentials: true,
   })
 );
+
 app.use(express.json())
 
  //routes
