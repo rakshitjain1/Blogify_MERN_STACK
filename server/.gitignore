@@ -1,24 +1,39 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-.env
-node_modules
-dist
-dist-ssr
-*.local
+# Node.js dependencies
+/node_modules/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Build output
+/dist/
+/build/
+
+
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS generated files
 .DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+
+# Misc
+*.log
+
+# Optional: coverage reports
+coverage/
+
+# Optional: Next.js build output
+.next/
+
+# Optional: React Native
+.expo/
