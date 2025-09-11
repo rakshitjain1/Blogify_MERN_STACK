@@ -12,9 +12,13 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL || "https://blogify-mern-stack.vercel.app",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allow preflight
+    allowedHeaders: ["Content-Type", "Authorization"],    // allow custom headers
   })
 );
 
+// ✅ Handle preflight requests explicitly
+app.options("*", cors());
 app.use(express.json())
 
  //routes
