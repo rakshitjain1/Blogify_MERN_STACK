@@ -165,7 +165,7 @@ const AddBlog = () => {
         <input
           type="text"
           placeholder="Enter Author Name"
-          required
+          // required
           className="w-full max-w-lg mt-2 p-3 border border-gray-300 focus:ring-2 focus:ring-primary outline-none rounded-lg"
           onChange={(e) => setAuthor(e.target.value)}
           value={author}

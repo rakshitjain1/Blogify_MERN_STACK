@@ -10,10 +10,12 @@ const app = express();
 await connectDB()
 //Middelwars
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL, // e.g. "https://myblogify.vercel.app"
-    credentials: true
-  })
+  cors(
+//     {
+//     origin: process.env.FRONTEND_URL, // e.g. "https://myblogify.vercel.app"
+//     credentials: true
+//   }
+)
 );
 app.use(express.json())
 
