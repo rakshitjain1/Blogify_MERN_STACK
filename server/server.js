@@ -6,19 +6,17 @@ import adminRouter from "./routes/adminRoute.js";
 import blogRouter from "./routes/blogRoutes.js";
 
 const app = express();
-  await connectDB()
+  
+await connectDB()
 //Middelwars
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "https://blogify-mern-stack.vercel.app",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allow preflight
-    allowedHeaders: ["Content-Type", "Authorization"],    // allow custom headers
-  })
+  cors()
+//     {
+//     origin: process.env.FRONTEND_URL, // e.g. "https://myblogify.vercel.app"
+//     credentials: true
+//   }
+// )
 );
-
-// ✅ Handle preflight requests explicitly
-app.options("*", cors());
 app.use(express.json())
 
  //routes
