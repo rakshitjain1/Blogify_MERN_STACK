@@ -6,8 +6,7 @@ import adminRouter from "./routes/adminRoute.js";
 import blogRouter from "./routes/blogRoutes.js";
 
 const app = express();
-  
-await connectDB()
+   connectDB()
 //Middelwars
 app.use(
   cors(
