@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-app.use(express.json())
+app.use(express.json()) //app.use(express.json()) is an Express middleware that parses incoming requests with JSON payloads and makes the parsed data available in req.body.
 
  //routes
 app.get('/',(req ,res)=>{

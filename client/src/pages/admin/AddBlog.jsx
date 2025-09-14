@@ -13,7 +13,7 @@ const AddBlog = () => {
   const editorRef = useRef(null);
   const QuillRef = useRef(null);
 
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [subtitle, setSubTitle] = useState("");
@@ -30,8 +30,8 @@ const AddBlog = () => {
         description: QuillRef.current.root.innerHTML,
         category,
         isPublished,
-        author,
       };
+      if (author) blog.author = author; // optional
 
       const formData = new FormData();
       formData.append("blog", JSON.stringify(blog));
@@ -40,11 +40,13 @@ const AddBlog = () => {
       const { data } = await axios.post("/api/blog/add", formData);
       if (data.success) {
         toast.success(data.message);
-        setImage(false);
+        setImage(null);
         setTitle("");
+        setSubTitle("");
         QuillRef.current.root.innerHTML = "";
         setCategory("Startup");
         setAuthor("");
+        setIsPublished(false);
       } else {
         toast.error(data.message);
       }
@@ -85,7 +87,9 @@ const AddBlog = () => {
     >
       <div className="bg-white w-full max-w-3xl p-4 md:p-10 sm:m-10 shadow rounded">
         {/* Upload Thumbnail */}
-        <p> Upload thumbnail</p>
+        <p>
+          Upload thumbnail <span className="text-red-500">*</span>
+        </p>
         <label htmlFor="image">
           <img
             src={!image ? assets.upload_area : URL.createObjectURL(image)}
@@ -102,7 +106,9 @@ const AddBlog = () => {
         </label>
 
         {/* Blog Title */}
-        <p className="mt-4">Blog Title</p>
+        <p className="mt-4">
+          Blog Title <span className="text-red-500">*</span>
+        </p>
         <input
           type="text"
           placeholder="Enter Your Title"
@@ -113,10 +119,12 @@ const AddBlog = () => {
         />
 
         {/* Blog Subtitle */}
-        <p className="mt-4">Blog SubTitle</p>
+        <p className="mt-4">
+          Blog Subtitle <span className="text-red-500">*</span>
+        </p>
         <input
           type="text"
-          placeholder="Enter Your SubTitle"
+          placeholder="Enter Your Subtitle"
           required
           className="w-full max-w-lg mt-2 p-3 border border-gray-300 focus:ring-2 focus:ring-primary outline-none rounded-lg"
           onChange={(e) => setSubTitle(e.target.value)}
@@ -124,7 +132,9 @@ const AddBlog = () => {
         />
 
         {/* Blog Description */}
-        <p className="mt-4">Blog Description</p>
+        <p className="mt-4">
+          Blog Description <span className="text-red-500">*</span>
+        </p>
         <div className="max-w-lg h-74 pb-16 sm:pb-10 pt-2 relative border border-gray-300 rounded-lg">
           <div ref={editorRef} className="p-2 min-h-[150px]" />
           {loading && (
@@ -143,43 +153,43 @@ const AddBlog = () => {
         </div>
 
         {/* Blog Category */}
-        <p className="mt-4">Blog category</p>
+        <p className="mt-4">
+          Blog Category <span className="text-red-500">*</span>
+        </p>
         <select
           onChange={(e) => setCategory(e.target.value)}
           name="category"
           className="mt-2 px-3 py-2 border text-gray-500 rounded hover:underline cursor-pointer"
           value={category}
+          required
         >
-          <option value="">Select category </option>
-          {blogCategories.map((item, index) => {
-            return (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            );
-          })}
+          <option value="">Select category</option>
+          {blogCategories.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
         </select>
 
-        {/* Author */}
-        <p className="mt-4">Author</p>
+        {/* Author (optional) */}
+        <p className="mt-4">Author (optional)</p>
         <input
           type="text"
           placeholder="Enter Author Name"
-          // required
           className="w-full max-w-lg mt-2 p-3 border border-gray-300 focus:ring-2 focus:ring-primary outline-none rounded-lg"
           onChange={(e) => setAuthor(e.target.value)}
           value={author}
         />
 
-        {/* Publish */}
-        <div className="flex gap-2 mt-4">
-          <p>Publish Now</p>
+        {/* Publish (optional) */}
+        <div className="flex gap-2 mt-4 items-center">
           <input
             type="checkbox"
             checked={isPublished}
             className="scale-125 cursor-pointer"
             onChange={(e) => setIsPublished(e.target.checked)}
           />
+          <p>Publish Now (optional)</p>
         </div>
 
         {/* Submit */}
