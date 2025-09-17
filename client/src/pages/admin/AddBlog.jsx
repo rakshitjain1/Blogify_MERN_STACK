@@ -74,11 +74,47 @@ const AddBlog = () => {
     }
   };
 
-  useEffect(() => {
-    if (!QuillRef.current && editorRef.current) {
-      QuillRef.current = new Quill(editorRef.current, { theme: "snow" });
+useEffect(() => {
+  if (!QuillRef.current && editorRef.current) {
+    // Extend Link behavior
+    const Link = Quill.import("formats/link");
+    class CustomLink extends Link {
+      static sanitize(url) {
+        if (!/^https?:\/\//.test(url)) {
+          return "https://" + url;
+        }
+        return super.sanitize(url);
+      }
     }
-  }, []);
+    Quill.register(CustomLink, true);
+
+    QuillRef.current = new Quill(editorRef.current, {
+      theme: "snow",
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, 3, false] }], // Headings
+          ["bold", "italic", "underline", "strike"], // Text styles
+          [{ list: "ordered" }, { list: "bullet" }], // Lists
+          ["link"], // Links
+          ["clean"], // Remove formatting
+        ],
+      },
+    });
+
+    // Ensure links open in new tab
+    QuillRef.current.root.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
+        e.preventDefault();
+        const url = e.target.getAttribute("href");
+        if (url) {
+          window.open(url, "_blank", "noopener,noreferrer");
+        }
+      }
+    });
+  }
+}, []);
+
+
 
   return (
     <form
