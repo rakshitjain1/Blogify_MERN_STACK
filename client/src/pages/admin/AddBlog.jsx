@@ -16,7 +16,7 @@ const AddBlog = () => {
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [subtitle, setSubTitle] = useState("");
+  const [subTitle, setSubTitle] = useState("");
   const [category, setCategory] = useState("Startup");
   const [isPublished, setIsPublished] = useState(false);
 
@@ -26,7 +26,7 @@ const AddBlog = () => {
       setIsAdding(true);
       const blog = {
         title,
-        subtitle,
+        subTitle,
         description: QuillRef.current.root.innerHTML,
         category,
         isPublished,
@@ -164,7 +164,7 @@ useEffect(() => {
           required
           className="w-full max-w-lg mt-2 p-3 border border-gray-300 focus:ring-2 focus:ring-primary outline-none rounded-lg"
           onChange={(e) => setSubTitle(e.target.value)}
-          value={subtitle}
+          value={subTitle}
         />
 
         {/* Blog Description */}
